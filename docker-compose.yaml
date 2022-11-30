@@ -1,0 +1,35 @@
+version: "3.2"
+services:
+
+  backend:
+    restart: always
+    container_name: api
+    command : bash -c "
+                      python3 manage.py migrate &&
+                      python3 manage.py runserver 0.0.0.0:8000"
+    build:
+      context: ./djangoConfig/
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - netw
+
+  frontend:
+    restart: always
+    command : npm start
+    container_name: front
+    build:
+      context: ./djangoConfig/frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - backend
+    networks:
+      - netw
+
+networks:
+  netw:
+    driver: bridge
