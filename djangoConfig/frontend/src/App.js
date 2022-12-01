@@ -28,6 +28,17 @@ function App() {
     }
   };
 
+  const getFlightsDijkstra = async (ido, idd) => {
+    try {
+      const _flight = await api.get(`get-data-dijkstra/?ido=${ido}&idd=${idd}`);
+      setFlights(_flight.data.flights);
+      setTotalPrice(_flight.data.total_price);
+      setNoPath(false);
+    } catch (error) {
+      setNoPath(true);
+    }
+  };
+
   const getAirports = async () => {
     try {
       const _airport = await api.get("/airports");
@@ -48,19 +59,18 @@ function App() {
   };
 
   const plotGraph = async () => {
-      await api.get(`plot/`);
-  }
+    await api.get(`plot/`);
+  };
 
   const plotPath = async (ido, idd) => {
-    try{
-      await api.get(`plot-path/?ido=${ido}&idd=${idd}`)
-    }
-    catch(error){
+    try {
+      await api.get(`plot-path/?ido=${ido}&idd=${idd}`);
+    } catch (error) {
       console.log(error.message);
-      if(ido === idd)
-        alert('Você não pode usar um aeroporto de destino igual ao de origem.')
+      if (ido === idd)
+        alert("Você não pode usar um aeroporto de destino igual ao de origem.");
     }
-  }
+  };
 
   let i = 0;
   let idd = 0;
@@ -182,8 +192,9 @@ function App() {
           PLOTAR ÁRVORE RESPOSTA{" "}
         </button>
       </div>
-      <p style={{ color: "#b8b8b8" }}>(Não rodar no Docker para usar a biblioteca matplotlib.pyplot)</p>
-
+      <p style={{ color: "#b8b8b8" }}>
+        (Não rodar no Docker para usar a biblioteca matplotlib.pyplot)
+      </p>
 
       <button
         type="button"
@@ -191,7 +202,16 @@ function App() {
         onClick={() => getFlights(origin, destination)}
       >
         {" "}
-        VER MENOR ROTA VOANDO{" "}
+        VER MENOR ROTA
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        onClick={() => getFlightsDijkstra(origin, destination)}
+      >
+        {" "}
+        VER ROTA MAIS BARATA
       </button>
 
       {noPath ? (
