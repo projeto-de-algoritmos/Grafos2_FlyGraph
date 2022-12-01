@@ -1,5 +1,7 @@
 from pandas import *
 from .graphs import *
+from .heaps import *
+
 from .utils import *
 from os import *
 
@@ -22,7 +24,7 @@ def bfsExecute(origin, destination):
 
     finalPath = bfs(
         nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-
+    print(finalPath)
     i = 0
     totalPrice = 0
     totalFlights = []
@@ -41,6 +43,31 @@ def bfsExecute(origin, destination):
 
     return result
 
+
+def dijikstraExecute(origin, destination):
+
+    finalPath = dijkstra(
+        nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
+    print(finalPath)
+    i = 0
+    totalPrice = 0
+    totalFlights = []
+    for airport in finalPath:
+        if i != len(finalPath)-1:
+            for flight in airport.flights:
+                if (
+                    flight.origin.oaci == finalPath[i].oaci
+                        and flight.destination.oaci == finalPath[i+1].oaci):
+                    totalFlights.append(flight)
+                    i += 1
+                    totalPrice += flight.price
+                    break
+    result = Response(total_price=totalPrice,
+                      num_arestas=i, flights=totalFlights)
+
+    return result
+
+
 def bfsPlot(origin, destination):
 
     finalPath = bfs(
@@ -58,8 +85,10 @@ def checkGraph():
     result = checkStrongConnectivity(nodesList, nodesList[0])
     return result
 
+
 def plot():
     plotGraph(nodesList=nodesList)
+
 
 def pathPlot(finalPath):
     plotGraph(nodesList=finalPath)
