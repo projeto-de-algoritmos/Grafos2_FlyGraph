@@ -29,14 +29,12 @@ def shiftUp(heap, i, index):
 
 def dijkstra(nodesList, source, end):
     # Criando as variáveis suporte
-    visited = {}
     nodes = {}
     index = {}
     s = {}
 
     for airport in nodesList:
         s[airport.oaci] = (math.inf, airport.oaci, None) # Criando o dicionário 's' de resultado com as tuplas
-        visited[airport.oaci] = False # Marcando todos os nós como não visitados
         nodes[airport.oaci] = airport # Mapeando os nós aos seus OACI
     
     # Inicializando a tupla do nó inicial
@@ -56,7 +54,7 @@ def dijkstra(nodesList, source, end):
     print(index)
 
     # Loop do Dijkstra
-    while len(heap)-1 > 0: # 0, 1, 2, ... , 7 ( 8 elementos )
+    while len(heap) > 0: # 0, 1, 2, ... , 7 ( 8 elementos )
 
         # Print de debug
         print('\n\n','step',decr+1)
@@ -67,24 +65,31 @@ def dijkstra(nodesList, source, end):
         first = heappop(heap)
         del index[first[1]]
         j = 0
-        for el in heap:
+        for el in heap: # Reajustando o contador de index
             index[el[1]] = j
             j+=1
         decr +=1 # Decrementando
 
-        for flight in nodes[first[1]].flights:
-            if flight.price < s[flight.destination.oaci][0]: # Se o voo tem um menor preço do que o que está mapeado
-                s[flight.destination.oaci] = (flight.price, flight.destination.oaci, flight.origin.oaci) # Substitua a tupla no conjunto resposta
-                # print('i',index[flight.destination.oaci],'decr',decr)
-                heap[index[flight.destination.oaci]] = (flight.price, flight.destination.oaci, flight.origin.oaci) # Substitua a tupla no heap
-                shiftUp(heap, (index[flight.destination.oaci]), index) # Arrumar a ordem do heap
-                # print(index)
-        visited[first[1]] = True # Marcar o aeroporto como visitado
+        for flight in nodes[first[1]].flights: # Olhando as arestas do aeroporto que saiu do heap
+            if flight.destination.oaci in index.keys(): # Se não estou mapeando o index, não preciso olhar (previne erros)
+                if flight.price + s[flight.origin.oaci][0] < s[flight.destination.oaci][0]: # Se o voo tem um menor preço do que o que está mapeado
+                    s[flight.destination.oaci] = (flight.price + s[flight.origin.oaci][0], flight.destination.oaci, flight.origin.oaci) # Substitua a tupla no conjunto resposta
+                    heap[index[flight.destination.oaci]] = (flight.price + s[flight.origin.oaci][0], flight.destination.oaci, flight.origin.oaci) # Substitua a tupla no heap
+                    shiftUp(heap, (index[flight.destination.oaci]), index) # Arrumar a ordem do heap
 
-        # print(len(heap), 'decr', decr)
-    
-    # Print de debug
-    print('len', len(heap)-1)
-    print('\n\n','step',decr+1)
-    print('ANSWER:',s)
+    # Print final
+    print('\n\nfinal step\n','ANSWER:',s)
     print('HEAP',heap)
+
+    node = s[end]
+    path = []
+    while node[1] != s[source][1]:
+        path.append((node[1], nodes[node[1]]))
+        node = s[node[2]]
+    path.append((source, nodes[source]))
+    path.reverse()
+
+    print('\n\nSHORTEST PATH')
+    print('menor preço:', s[end][0])
+    for e in path:
+        print(e[0], e[1].name)
