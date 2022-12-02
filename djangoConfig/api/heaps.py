@@ -80,7 +80,8 @@ def dijkstra(nodesList, source, end):
         # Olhando as arestas do aeroporto que saiu do heap
         for flight in nodes[first[1]].flights:
             # Se não estou mapeando o index, não preciso olhar (previne erros)
-            if flight.destination.oaci in index.keys():
+            if (flight.destination.oaci in index.keys()
+                and index[flight.destination.oaci] < len(heap)):
                 # Se o voo tem um menor preço do que o que está mapeado
                 if flight.price + s[flight.origin.oaci][0] < s[flight.destination.oaci][0]:
                     # Substitua a tupla no conjunto resposta
@@ -102,9 +103,9 @@ def dijkstra(nodesList, source, end):
         node = s[node[2]]
     path.append(nodes[source])
     path.reverse()
-    return path
-
     # print('\n\nSHORTEST PATH')
     # print('menor preço:', s[end][0])
     # for e in path:
-    #     print(e[0], e[1].name)
+    #     print(e.oaci)
+    return path
+
