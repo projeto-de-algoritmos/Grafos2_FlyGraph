@@ -243,6 +243,8 @@ function App() {
                 destinationOrigin={data.destination.state}
                 price={data.price}
                 seats={data.seats}
+                departure={data.departure.substring(11,16)}
+                arrival={data.arrival.substring(11,16)}
                 img={
                   "https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=https://pt.wikipedia.org/wiki/Special:Search?search=aeroporto+" +
                   data.origin.name.toLowerCase()

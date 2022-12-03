@@ -33,8 +33,12 @@ def createFlights(nodesList, edges):
         airportNodes[airport.oaci] = airport
     for i in edges["ORIGEM"]:
         flight = Flight(
+            id=edges["ID"][i],
             origin=airportNodes[edges["ORIGEM"][i]],
+            departure=edges["DEPARTURE"][i],
             destination=airportNodes[edges["DESTINO"][i]],
+            arrival=edges["ARRIVAL"][i],
+            travelTimeMinutes=edges["TRAVEL_TIME_MIN"][i],
             price=edges["TARIFA"][i],
             seats=edges["ASSENTOS"][i],
             used=False

@@ -16,6 +16,7 @@ function BoardingPass(props) {
           <div class="airport-code">{props.oaciOrigin || "OACI"}</div>
           <div class="dep-arr-label">({props.stateOrigin || "STATE"})</div>
           <div class="time">Embarque</div>
+          <div class="time">({props.departure || "00:00:00"})</div>
         </div>
         <div class="plane-icon"></div>
         <div class="airport">
@@ -25,6 +26,7 @@ function BoardingPass(props) {
           <div class="airport-code">{props.oaciDestination || "OACI"}</div>
           <div class="dep-arr-label">({props.stateDestination || "STATE"})</div>
           <div class="time">Desembarque</div>
+          <div class="time">({props.arrival || "00:00:00"})</div>
         </div>
       </section>
       <section class="place">
