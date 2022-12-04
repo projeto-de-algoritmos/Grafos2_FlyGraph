@@ -32,9 +32,9 @@ function App() {
     }
   };
 
-  const getFlightsDijkstra = async (ido, idd) => {
+  const getFlightsDijkstra = async (ido, idd, type) => {
     try {
-      const _flight = await api.get(`get-data-dijkstra/?ido=${ido}&idd=${idd}`);
+      const _flight = await api.get(`get-data-dijkstra/?ido=${ido}&idd=${idd}&type=${type}`);
       setFlights(_flight.data.flights);
       setTotalPrice(_flight.data.total_price);
       setTotalTime(_flight.data.total_time);
@@ -214,10 +214,19 @@ function App() {
       <button
         type="button"
         class="btn btn-outline-success"
-        onClick={() => getFlightsDijkstra(origin, destination)}
+        onClick={() => getFlightsDijkstra(origin, destination, 'price')}
       >
         {" "}
         VER ROTA MAIS BARATA
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        onClick={() => getFlightsDijkstra(origin, destination, 'time')}
+      >
+        {" "}
+        VER ROTA MAIS RÁPIDA
       </button>
 
       {noPath ? (

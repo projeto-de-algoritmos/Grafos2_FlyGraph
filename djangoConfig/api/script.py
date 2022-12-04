@@ -46,10 +46,10 @@ def bfsExecute(origin, destination):
     return result
 
 
-def dijikstraExecute(origin, destination):
+def dijikstraExecute(origin, destination, type):
 
     finalPath = dijkstra(
-        nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
+        nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci, type)
     # print(finalPath)
     i = 0
     totalPrice = 0
