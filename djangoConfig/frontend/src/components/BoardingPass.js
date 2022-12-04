@@ -31,6 +31,10 @@ function BoardingPass(props) {
       </section>
       <section class="place">
         <div class="place-block">
+          <div class="place-label">TEMPO DE VOO</div>
+          <div class="place-value">{(props.travelTime-props.travelTime%60)/60 || 0}h {props.travelTime%60}min</div>
+        </div>
+        <div class="place-block">
           <div class="place-label">PREÇO</div>
           <div class="place-value">R$ {props.price || 0}</div>
         </div>

@@ -24,9 +24,10 @@ def bfsExecute(origin, destination):
 
     finalPath = bfs(
         nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-    print(finalPath)
+    # print(finalPath)
     i = 0
     totalPrice = 0
+    totalTime = 0
     totalFlights = []
     for airport in finalPath:
         if i != len(finalPath)-1:
@@ -37,9 +38,10 @@ def bfsExecute(origin, destination):
                     totalFlights.append(flight)
                     i += 1
                     totalPrice += flight.price
+                    totalTime += flight.travelTimeMinutes
                     break
     result = Response(total_price=totalPrice,
-                      num_arestas=i, flights=totalFlights)
+                      num_arestas=i, flights=totalFlights, total_time=totalTime)
 
     return result
 
@@ -48,9 +50,10 @@ def dijikstraExecute(origin, destination):
 
     finalPath = dijkstra(
         nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-    print(finalPath)
+    # print(finalPath)
     i = 0
     totalPrice = 0
+    totalTime = 0
     totalFlights = []
     for airport in finalPath:
         if i != len(finalPath)-1:
@@ -61,9 +64,10 @@ def dijikstraExecute(origin, destination):
                     totalFlights.append(flight)
                     i += 1
                     totalPrice += flight.price
+                    totalTime += flight.travelTimeMinutes
                     break
     result = Response(total_price=totalPrice,
-                      num_arestas=i, flights=totalFlights)
+                      num_arestas=i, flights=totalFlights, total_time=totalTime)
 
     return result
 

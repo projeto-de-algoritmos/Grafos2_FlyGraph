@@ -61,7 +61,7 @@ def returnAirports(nodeList):
     result = []
     for node in nodeList:
         result.append(node.to_dict())
-    print(len(result))
+    # print(len(result))
     return result
 
 

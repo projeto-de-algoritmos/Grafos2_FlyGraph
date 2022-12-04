@@ -16,12 +16,16 @@ function App() {
   const [consumed, setConsumed] = useState(false);
   const [noPath, setNoPath] = useState(false);
   const [totalPrice, setTotalPrice] = useState("");
+  const [totalTime, setTotalTime] = useState("");
+  const [connections, setConnections] = useState("");
 
   const getFlights = async (ido, idd) => {
     try {
       const _flight = await api.get(`get-data/?ido=${ido}&idd=${idd}`);
       setFlights(_flight.data.flights);
       setTotalPrice(_flight.data.total_price);
+      setTotalTime(_flight.data.total_time);
+      setConnections(_flight.data.flights.length);
       setNoPath(false);
     } catch (error) {
       setNoPath(true);
@@ -33,6 +37,8 @@ function App() {
       const _flight = await api.get(`get-data-dijkstra/?ido=${ido}&idd=${idd}`);
       setFlights(_flight.data.flights);
       setTotalPrice(_flight.data.total_price);
+      setTotalTime(_flight.data.total_time);
+      setConnections(_flight.data.flights.length);
       setNoPath(false);
     } catch (error) {
       setNoPath(true);
@@ -232,6 +238,22 @@ function App() {
                   </span>
                 </p>
               )}
+              {i !== 1 ? null : (
+                <p className="preco">
+                  <span>
+                    {" "}
+                    TEMPO TOTAL DE VOO: {(Number(totalTime)-Number(totalTime)%60)/60}h {Number(totalTime)%60}min{" "}
+                  </span>
+                </p>
+              )}
+              {i !== 1 ? null : (
+                <p className="preco">
+                  <span>
+                    {" "}
+                    NÚMERO DE CONEXÕES: {connections-1} conexões{" "}
+                  </span>
+                </p>
+              )}
               <BoardingPass
                 nameOrigin={data.origin.name}
                 nameDestination={data.destination.name}
@@ -245,6 +267,7 @@ function App() {
                 seats={data.seats}
                 departure={data.departure.substring(11,16)}
                 arrival={data.arrival.substring(11,16)}
+                travelTime={data.travelTimeMinutes}
                 img={
                   "https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=https://pt.wikipedia.org/wiki/Special:Search?search=aeroporto+" +
                   data.origin.name.toLowerCase()

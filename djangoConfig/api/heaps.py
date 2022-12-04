@@ -103,9 +103,11 @@ def dijkstra(nodesList, source, end):
         node = s[node[2]]
     path.append(nodes[source])
     path.reverse()
+
     # print('\n\nSHORTEST PATH')
     # print('menor preço:', s[end][0])
-    # for e in path:
+    # print(path)
+    # for e in path:s
     #     print(e.oaci)
     return path
 
