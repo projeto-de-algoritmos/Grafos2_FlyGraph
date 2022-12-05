@@ -21,10 +21,13 @@ def getDataDijkstra(request):
     origin = int(request.query_params['ido'])
     destination = int(request.query_params['idd'])
     type = request.query_params['type']
-    result = script.dijikstraExecute(origin, destination, type)
-    response = result.to_dict()
+    try:
+        result = script.dijikstraExecute(origin, destination, type)
+        response = result.to_dict()
 
-    return Response(response)
+        return Response(response)
+    except:
+        return Response("Não existe caminho possível")
 
 
 @api_view(['GET'])
