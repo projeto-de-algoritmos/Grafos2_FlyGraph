@@ -1,7 +1,7 @@
 from pandas import *
 from .graphs import *
 from .heaps import *
-
+from copy import copy
 from .utils import *
 from os import *
 
@@ -28,7 +28,7 @@ def bfsExecute(origin, destination):
     totalPrice = 0
     totalTime = 0
     totalFlights = []
-    result=[]
+    result = []
     for airport in finalPath:
         if i != len(finalPath)-1:
             for flight in airport.flights:
@@ -69,6 +69,7 @@ def dijikstraExecute(origin, destination, type):
                       num_arestas=i, flights=totalFlights, total_time=totalTime)
 
     return result
+
 
 
 def bfsPlot(origin, destination):
