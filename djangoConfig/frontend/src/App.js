@@ -229,6 +229,15 @@ function App() {
         VER ROTA MAIS RÁPIDA
       </button>
 
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        onClick={() => getFlightsDijkstra(origin, destination, 'real-time')}
+      >
+        {" "}
+        VER ROTA COM MENOS ESPERA
+      </button>
+
       {noPath ? (
         <p className="semCaminho"> Não existe caminho possível </p>
       ) : (
