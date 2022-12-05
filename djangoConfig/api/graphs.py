@@ -6,6 +6,7 @@ from .models.flight import Flight
 from .models.airport import Airport
 from .heaps import *
 import matplotlib.pyplot as plt
+import math
 
 sys.path.insert(0, "models")
 sys.path.insert(0, "data")
@@ -191,7 +192,6 @@ def dijkstra(nodesList, source, end, type='price'):
 
     heap = []
     i = 0
-    decr = 0
 
     # Inserindo as tuplas do conjunto resposta 's' no heap
     for airport in nodesList:
@@ -207,7 +207,6 @@ def dijkstra(nodesList, source, end, type='price'):
         for el in heap:
             index[el[1]] = j
             j += 1
-        decr += 1
 
         if type == 'price':
             # Olhando as arestas do aeroporto que saiu do heap

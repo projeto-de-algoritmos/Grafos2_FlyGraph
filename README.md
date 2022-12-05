@@ -19,21 +19,21 @@ Convertendo os dados de uma planilha (.xlxs) pública para um grafo direcionado,
 
 *Easter Egg (:rabbit:): Escaneie os QR Codes das passagens.*
 
-### Explicação funcionalidades 
+### Explicação das funcionalidades 
 
-**Checar Integridade:** Utiliza o algoritmo de grafo reverso para verificar se o grafo é fortemente conexo, caso não seja é exibido qual é a conexão inexistente
+**[Checar Integridade]:** Utiliza o algoritmo de BFS no grafo original e grafo reverso para verificar se o grafo é fortemente conectado, caso não seja é exibido qual é a conexão inexistente.
 
-**Plotar Grafo Completo:** Utiliza biblioteca do python para abrir um pop-up mostrando o grafo formado a partir da base de dados. 
+**[Plotar Grafo Completo]:** Utiliza biblioteca do Python para abrir um pop-up mostrando o grafo formado a partir da base de dados completa. 
 
-**Plotar Árvore resposta:** Da mesma forma que o anterior, abre o pop-up da árvore formada a partir dos dois aeroportos escolhidos.
+**[Plotar Árvore Resposta]:** Da mesma forma que o anterior, abre o pop-up da árvore formada a partir dos dois aeroportos escolhidos.
 
-**Ver menor rota:** Utiliza o algoritmo de busca em largura(BFS) para encontrar o caminho com menos conexões entre os aeroportos
+**[Ver menor rota]:** Utiliza o algoritmo de busca em largura (BFS) para encontrar o caminho com menos conexões (arestas) entre os aeroportos de origem e destino.
 
-**Ver rota mais barata:** Utiliza o algoritmo de Dijkstra considerando o preço como parâmetro para encontrar caminho mais barato
+**[Ver rota mais barata]:** Utiliza o algoritmo de Dijkstra considerando o preço como parâmetro para encontrar caminho mais barato entre a origem e o destino escolhidos.
 
-**Ver rota mais rápida:** Utiliza o algoritmo de Dijkstra considerando o tempo de vôo  como parâmetro para encontrar caminho mais rápido
+**[Ver rota mais rápida]:** Utiliza o algoritmo de Dijkstra considerando o tempo de voo  como parâmetro para encontrar caminho mais rápido da origem ao destino.
 
-**Ver rota com menos espera:** 
+**[Ver rota com menos espera]:** Utilizar o algoritmo de Dijkstra considerando o tempo de voo como parâmetro para encontrar o caminho mais rápido da origem ao destino, mas fazendo a checagem de integridade na qual a diferença do tempo de desembarque de um voo até o embarque do próximo é de, no mínimo, 60 minutos.
 
 ## Screenshots
 ### Inserir novos Screenshoots

@@ -1,8 +1,6 @@
 from heapq import *
 from copy import *
 from datetime import timedelta, time
-import math
-
 
 def parent(i):
     return (i - 1) // 2
@@ -32,7 +30,3 @@ def shiftUp(heap, i, index):
     while (i > 0 and heap[parent(i)][0] > heap[i][0]):
         swap(heap, i, index)
         i = parent(i)
-
-
-
-
