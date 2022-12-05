@@ -12,18 +12,6 @@ def clear():
 if __name__ == "__main__":
     nodesList = []
 
-    # DIJKSTRA
-    # xls = ExcelFile("./djangoConfig/api/data/heap.xlsx")
-    # nodes = xls.parse(xls.sheet_names[0]).to_dict()
-    # xls = ExcelFile("./djangoConfig/api/data/heap.xlsx")
-    # edges = xls.parse(xls.sheet_names[1]).to_dict()
-
-    # createAirports(nodesList=nodesList, nodes=nodes)
-    # createFlights(nodesList=nodesList, edges=edges)
-
-    # printGraph(nodesList)
-    # dijkstra(nodesList, 'S', 'T')
-
     # AEROPORTOS
     xls = ExcelFile("./djangoConfig/api/data/aeroportos.xlsx")
     nodes = xls.parse(xls.sheet_names[0]).to_dict()
@@ -44,23 +32,4 @@ if __name__ == "__main__":
     
     paths =[]
     finalPath = bfs(nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-    paths.append(finalPath)
-    
-    try:
-        for node in nodesList:
-            for edge in node.flights:
-                if edge.destination.oaci == finalPath[1].oaci:
-                    node.removeEdge(edge)
-        finalPath = bfs(nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-        if finalPath != None:
-            paths.append(finalPath)
-    except: 
-        print("aa")
-        
-   
-
-    print(paths)
-   
-    for path in paths:
-        for airport in path:
-            print (airport.oaci)
+    printFinalPath(finalPath)

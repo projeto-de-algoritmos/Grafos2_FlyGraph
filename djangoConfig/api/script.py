@@ -70,43 +70,6 @@ def dijikstraExecute(origin, destination, type):
 
     return result
 
-def MultiBfsExecute(origin, destination):
-    i = 0
-    totalPrice = 0
-    totalTime = 0
-    totalFlights = []
-    paths =[]
-    finalPath = bfs(nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-    paths.append(finalPath)
-    results=[]
-    try:
-        newNodesList= copy.copy(nodesList)
-        for node in newNodesList:
-            for edge in node.flights:
-                if edge.destination.oaci == finalPath[1].oaci:
-                    node.removeEdge(edge)
-        finalPath = bfs(newNodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-        if finalPath != None:
-            paths.append(finalPath)
-    except: 
-        print("aa")
-    print(paths)
-    for path in paths:
-        for airport in path:        
-            if i != len(finalPath)-1 and finalPath != None:
-                for flight in airport.flights:
-                    if (
-                        flight.origin.oaci == finalPath[i].oaci
-                            and flight.destination.oaci == finalPath[i+1].oaci):
-                        totalFlights.append(flight)
-                        print(flight.origin.oaci)
-                        i += 1
-                        totalPrice += flight.price
-                        totalTime += flight.travelTimeMinutes
-    results = Response(total_price=totalPrice,
-                      num_arestas=i, flights=totalFlights, total_time=totalTime)
-    
-    return results
 
 def bfsPlot(origin, destination):
 
