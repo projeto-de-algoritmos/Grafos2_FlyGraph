@@ -29,7 +29,8 @@ def getDataDijkstra(request):
 
     origin = int(request.query_params['ido'])
     destination = int(request.query_params['idd'])
-    result = script.dijikstraExecute(origin, destination)
+    type = request.query_params['type']
+    result = script.dijikstraExecute(origin, destination, type)
     response = result.to_dict()
 
     return Response(response)
