@@ -24,7 +24,6 @@ def bfsExecute(origin, destination):
 
     finalPath = bfs(
         nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-    # print(finalPath)
     i = 0
     totalPrice = 0
     totalTime = 0
@@ -51,7 +50,6 @@ def dijikstraExecute(origin, destination, type):
 
     finalPath = dijkstra(
         nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci, type)
-    # print(finalPath)
     i = 0
     totalPrice = 0
     totalTime = 0

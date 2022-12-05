@@ -4,7 +4,7 @@ import networkx as nx
 from queue import Queue
 from .models.flight import Flight
 from .models.airport import Airport
-
+from .heaps import *
 import matplotlib.pyplot as plt
 
 sys.path.insert(0, "models")
@@ -169,3 +169,99 @@ def plotGraph(nodesList):
             G.add_edge(edge.origin.oaci, edge.destination.oaci)
     nx.draw_networkx(G)
     plt.show()
+
+def dijkstra(nodesList, source, end, type = 'price'):
+    nodes = {}
+    index = {}
+    s = {}
+
+    if type in ('time', 'price'):
+        for airport in nodesList:
+            s[airport.oaci] = (math.inf, airport.oaci, None)
+            nodes[airport.oaci] = airport  
+
+        s[source] = (0, source, source)  
+
+    elif type == 'real-time':
+        for airport in nodesList:
+            s[airport.oaci] = (math.inf, airport.oaci, None, None)
+            nodes[airport.oaci] = airport  
+
+        s[source] = (0, source, source, None)  
+
+    heap = []
+    i = 0
+    decr = 0
+
+    # Inserindo as tuplas do conjunto resposta 's' no heap
+    for airport in nodesList:
+        heappush(heap, s[airport.oaci])
+        index[airport.oaci] = i  
+        i += 1
+
+    # Loop do Dijkstra
+    while len(heap) > 0:  
+        first = heappop(heap)
+        del index[first[1]]
+        j = 0
+        for el in heap:  
+            index[el[1]] = j
+            j += 1
+        decr += 1  
+
+        if type == 'price':
+        # Olhando as arestas do aeroporto que saiu do heap
+            for flight in nodes[first[1]].flights:
+                # Se não estou mapeando o index, não preciso olhar (previne erros)
+                if (flight.destination.oaci in index.keys()
+                    and index[flight.destination.oaci] < len(heap)):
+                    # Se o voo tem um menor preço do que o que está mapeado
+                    if flight.price + s[flight.origin.oaci][0] < s[flight.destination.oaci][0]:
+                        # Substitua a tupla no conjunto resposta
+                        s[flight.destination.oaci] = (
+                            flight.price + s[flight.origin.oaci][0], flight.destination.oaci, flight.origin.oaci)
+                        heap[index[flight.destination.oaci]] = (
+                            flight.price + s[flight.origin.oaci][0], flight.destination.oaci, flight.origin.oaci)  # Substitua a tupla no heap
+                        # Arrumar a ordem do heap
+                        shiftUp(heap, (index[flight.destination.oaci]), index)
+        elif type == 'time':
+            # Olhando as arestas do aeroporto que saiu do heap
+            for flight in nodes[first[1]].flights:
+                # Se não estou mapeando o index, não preciso olhar (previne erros)
+                if (flight.destination.oaci in index.keys()
+                    and index[flight.destination.oaci] < len(heap)):
+                    # Se o voo tem um menor preço do que o que está mapeado
+                    if flight.travelTimeMinutes + s[flight.origin.oaci][0] < s[flight.destination.oaci][0]:
+                        # Substitua a tupla no conjunto resposta
+                        s[flight.destination.oaci] = (
+                            flight.travelTimeMinutes + s[flight.origin.oaci][0], flight.destination.oaci, flight.origin.oaci)
+                        heap[index[flight.destination.oaci]] = (
+                            flight.travelTimeMinutes + s[flight.origin.oaci][0], flight.destination.oaci, flight.origin.oaci)  # Substitua a tupla no heap
+                        # Arrumar a ordem do heap
+                        shiftUp(heap, (index[flight.destination.oaci]), index)
+        elif type == 'real-time':
+            # Olhando as arestas do aeroporto que saiu do heap
+            for flight in nodes[first[1]].flights:
+                # Se não estou mapeando o index, não preciso olhar (previne erros)
+                if (flight.destination.oaci in index.keys()
+                    and index[flight.destination.oaci] < len(heap)):
+                    # Se o voo tem um menor preço do que o que está mapeado
+                    if (flight.travelTimeMinutes + s[flight.origin.oaci][0] < s[flight.destination.oaci][0]
+                        and (flight.origin.oaci == source or ((s[flight.origin.oaci][3]+timedelta(hours=1)).time() <= flight.departure.time()))):
+                        # Substitua a tupla no conjunto resposta
+                        s[flight.destination.oaci] = (
+                            flight.travelTimeMinutes + s[flight.origin.oaci][0], flight.destination.oaci, flight.origin.oaci, flight.arrival)
+                        heap[index[flight.destination.oaci]] = (
+                            flight.travelTimeMinutes + s[flight.origin.oaci][0], flight.destination.oaci, flight.origin.oaci, flight.arrival)  # Substitua a tupla no heap
+                        # Arrumar a ordem do heap
+                        shiftUp(heap, (index[flight.destination.oaci]), index)
+
+    node = s[end]
+    path = []
+    while node[1] != s[source][1]:
+        path.append(nodes[node[1]])
+        node = s[node[2]]
+    path.append(nodes[source])
+    path.reverse()
+    
+    return path
