@@ -29,6 +29,9 @@ class Airport:
     def appendEdge(self, node):
         self.__flights.append(node)
 
+    def removeEdge(self, node):
+        self.__flights.remove(node)
+
     def to_dict(self):
         return{
             "oaci": self.oaci,

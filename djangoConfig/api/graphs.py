@@ -49,6 +49,7 @@ def createFlights(nodesList, edges):
                 break
 
 
+
 def printGraph(nodesList):
     for node in nodesList:
         edgeList = ''

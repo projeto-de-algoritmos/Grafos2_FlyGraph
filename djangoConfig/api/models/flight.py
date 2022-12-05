@@ -113,3 +113,6 @@ class Flight:
     @travelTimeMinutes.setter
     def travelTimeMinutes(self, travelTimeMinutes):
         self.__travelTimeMinutes = travelTimeMinutes
+
+    def remove(self):
+        self = None

@@ -4,6 +4,8 @@ from djangoConfig.api.heaps import *
 from djangoConfig.api.utils import *
 from os import *
 
+
+
 def clear():
     system('cls' if __name__ == 'nt' else 'clear')
 
@@ -39,13 +41,26 @@ if __name__ == "__main__":
     print("Qual o (ID) do aeroporto que será seu destino?")
     destination = int(input())
 
-    dijkstra(nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-
-    # finalPath = bfs(nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-    # if finalPath is None:
-    #     exit()
-    # printFinalPath(finalPath)
     
-    # print(f"GRAFO FORTEMENTE CONECTADO? {checkStrongConnectivity(nodesList, nodesList[0])}")
+    paths =[]
+    finalPath = bfs(nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
+    paths.append(finalPath)
+    
+    try:
+        for node in nodesList:
+            for edge in node.flights:
+                if edge.destination.oaci == finalPath[1].oaci:
+                    node.removeEdge(edge)
+        finalPath = bfs(nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
+        if finalPath != None:
+            paths.append(finalPath)
+    except: 
+        print("aa")
+        
+   
 
-    # plotGraph(finalPath)
+    print(paths)
+   
+    for path in paths:
+        for airport in path:
+            print (airport.oaci)

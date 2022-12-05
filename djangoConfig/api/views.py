@@ -14,6 +14,15 @@ def getData(request):
 
     return Response(response)
 
+@api_view(['GET'])
+def getDataMultiBfs(request):
+
+    origin = int(request.query_params['ido'])
+    destination = int(request.query_params['idd'])
+    result = script.MultiBfsExecute(origin, destination)
+    response = result.to_dict()
+
+    return Response(response)
 
 @api_view(['GET'])
 def getDataDijkstra(request):
