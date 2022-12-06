@@ -15,7 +15,7 @@ O FlyGraph é uma aplicação web que tem como objetivo verificar a integridade 
 A base de dados coletada foi retirada do [Site de Dados Abertos da ANAC (Agência Nacional de Aviação Civil)](https://www.anac.gov.br/acesso-a-informacao/dados-abertos) para os aeroportos e os voos. Inicialmente coletamos [550 aeroportos](https://sistemas.anac.gov.br/dadosabertos/Voos%20e%20opera%C3%A7%C3%B5es%20a%C3%A9reas/Registro%20de%20servi%C3%A7os%20a%C3%A9reos/2022/11%20-%20Novembro/) e [57 mil voos](https://sistemas.anac.gov.br/sas/tarifadomestica/2022/). A partir disso, utilizamos o [Google Big Query](https://cloud.google.com/bigquery) para, em SQL, limpar a base de aeroportos e voos garantindo que não houvesse voos sem aeroporto e aeroportos sem voo. 
 
 
-Convertendo os dados de uma planilha (.xlxs) pública para um grafo direcionado, utilizamos o algoritmo de reversão de grafo para checar a conectividade do grafo. Caso ele não seja fortemente conectado, significa que não é possível alcançar todos os outros aeroportos a partir de um aeroporto origem (escolhido arbitrariamente) no grafo original ou no grafo reverso. Para encontrar o menor caminho entre dois destinos foi aplicado o algoritmo de busca em largura (BFS) e o de Dijkstra considerando parâmetros especificos(Preço e Tempo de voo).
+Convertendo os dados de uma planilha (.xlxs) pública para um grafo direcionado, utilizamos o algoritmo de reversão de grafo para checar a conectividade do grafo. Caso ele não seja fortemente conectado, significa que não é possível alcançar todos os outros aeroportos a partir de um aeroporto origem (escolhido arbitrariamente) no grafo original ou no grafo reverso. Para encontrar o menor caminho entre dois destinos foi aplicado o algoritmo de busca em largura (BFS) e o de Dijkstra considerando parâmetros específicos (Preço e Tempo de Voo).
 
 *Easter Egg (:rabbit:): Escaneie os QR Codes das passagens.*
 
@@ -36,7 +36,16 @@ Convertendo os dados de uma planilha (.xlxs) pública para um grafo direcionado,
 **[Ver rota com menos espera]:** Utilizar o algoritmo de Dijkstra considerando o tempo de voo como parâmetro para encontrar o caminho mais rápido da origem ao destino, mas fazendo a checagem de integridade na qual a diferença do tempo de desembarque de um voo até o embarque do próximo é de, no mínimo, 60 minutos.
 
 ## Screenshots
-### Inserir novos Screenshoots
+### Caminho Mais Barato
+![maisbarato](img/maisbarato.png)
+
+### Caminho Mais Rápido
+![maisrapido](img/maisrapido.png)
+
+### Caminho de Menos Espera
+![menorespera](img/menorespera.png)
+
+## Vídeo de Apresentação
 
 ## Instalação 
 **Linguagem**: Python(Back-end) e JavaScript(Front-End) <br>
@@ -80,6 +89,6 @@ Opção 2 - Após instalar as dependências e rodar o server python, basta acess
 ## Outros 
 Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
 
-
+Se tiver problema com o front, delete o `node_modules` e `package-lock.json`.
 
 
