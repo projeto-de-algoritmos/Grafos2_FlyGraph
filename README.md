@@ -47,6 +47,8 @@ Convertendo os dados de uma planilha (.xlxs) pública para um grafo direcionado,
 
 
 ## Vídeo de Apresentação
+(O vídeo em qualidade cheia pode ser encontrado na pasta [img](https://github.com/projeto-de-algoritmos/Grafos2_FlyGraph/tree/master/img) ou ser baixado clicando [aqui](https://github.com/projeto-de-algoritmos/Grafos2_FlyGraph/blob/master/img/videografos2.mp4))
+
 https://user-images.githubusercontent.com/54643355/205784844-a08993d5-669f-4769-9529-bdb65e997c65.mp4
 
 
